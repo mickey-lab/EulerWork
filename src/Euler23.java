@@ -6,13 +6,19 @@ As 12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, the smallest numb
 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.*/
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 public class Euler23 {
 
     public static void main(String[] args) {
-        int[] primes = EulerToolkit.getPrimes(10);
+        int[] primes = EulerToolkit.getPrimes(121);
         for(int i :primes){
             System.out.println(i);
         }
+        Integer[] divisors = EulerToolkit.getDivisors(30);
+        System.out.println(Arrays.toString(divisors));
+        System.out.println(EulerToolkit.primeFactorise(1728).toString());
     }
 
 }
