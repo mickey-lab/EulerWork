@@ -6,20 +6,19 @@ As 12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, the smallest numb
 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.*/
 
-import java.lang.reflect.Array;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Euler23 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println(sumNonAbundantSums());
     }
 
-    public static int sumNonAbundantSums(){
+    public static int sumNonAbundantSums() throws IOException {
         //find all abundant numbers up to 28123
         ArrayList<Integer> abundantNums = new ArrayList<>();
-        for(int i = 12; i <= 28123; i++) {
+        for (int i = 12; i <= 28123; i++) {
             if (EulerToolkit.isAbundant(i)) {
                 abundantNums.add(i);
             }
@@ -27,13 +26,13 @@ public class Euler23 {
         //calculate which positive integers <= 28123 are sums of two abundant integers
         ArrayList<Integer> sumsOfAbundants = new ArrayList<>();
         int temp;
-        for(int i = 24; i <= 28123; i++){
-            for(int j = 0; j < abundantNums.size(); j++){
+        for (int i = 24; i <= 28123; i++) {
+            for (int j = 0; j < abundantNums.size(); j++) {
                 temp = i - abundantNums.get(j);
-                if(temp < 12){
+                if (temp < 12) {
                     break;
                 }
-                if(EulerToolkit.isAbundant(temp)){
+                if (EulerToolkit.isAbundant(temp)) {
                     sumsOfAbundants.add(i);
                     break;
                 }
@@ -41,11 +40,11 @@ public class Euler23 {
         }
         //sum all the abundant sums
         int sum = 0;
-        for(int x : sumsOfAbundants){
-            sum+=x;
+        for (int x : sumsOfAbundants) {
+            sum += x;
         }
         //sum all positive integers 1 to 28123 inclusive
-        int sumOfAll = (1+28123)*(28123)/2;
+        int sumOfAll = (1 + 28123) * (28123) / 2;
         //subtract sum of all abundant sums from sum of all pos.ints <= 28123 for answer
         return sumOfAll - sum;
     }
