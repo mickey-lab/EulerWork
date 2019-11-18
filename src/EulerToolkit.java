@@ -1,5 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.stream.IntStream;
 
@@ -34,30 +38,32 @@ public class EulerToolkit {
         for (int i = 1; i <= Math.floor(Math.sqrt(x)); i++) {
             if (x % i == 0) {
                 divisors.add(i);
-                if(i!=x/i) divisors.add(x / i);
+                if (i != x / i) divisors.add(x / i);
             }
         }
         int[] divisorsArr = new int[divisors.size()];
-        for(int i = 0; i < divisors.size(); i++){
+        for (int i = 0; i < divisors.size(); i++) {
             divisorsArr[i] = divisors.get(i);
         }
         Arrays.sort(divisorsArr);
         return divisorsArr;
     }
 
-    public static int[] getDivisorsProper(int x){
+    public static int[] getDivisorsProper(int x) {
         int[] divisors = getDivisors(x);
-        return Arrays.copyOfRange(divisors,0,divisors.length-1);
+        return Arrays.copyOfRange(divisors, 0, divisors.length - 1);
     }
 
     //from problem 23
-    public static boolean isPerfect(int x){
-        return IntStream.of(getDivisorsProper(x)).sum()==x;
+    public static boolean isPerfect(int x) {
+        return IntStream.of(getDivisorsProper(x)).sum() == x;
     }
-    public static boolean isAbundant(int x){
+
+    public static boolean isAbundant(int x) {
         return IntStream.of(getDivisorsProper(x)).sum() > x;
     }
-    public static boolean isDeficient(int x){
+
+    public static boolean isDeficient(int x) {
         return IntStream.of(getDivisorsProper(x)).sum() < x;
     }
 
@@ -120,6 +126,60 @@ public class EulerToolkit {
             }
         }
         return primes;
+    }
+
+    public static int[][] matrixInput(String fileName) throws IOException {
+        //get matrix file path
+        String path = System.getProperty("user.dir");
+        String file = path + "/" + fileName;
+        //count number of lines in file (number of rows of matrix)
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        int lineCount = (int) reader.lines().count();
+        //reset to beginning of file
+        reader = new BufferedReader(new FileReader(file));
+        //insert values into matrix 2-D array
+        int[][] matrix = new int[0][0];
+        String[] temp;
+        boolean initialized = false;
+        for (int i = 0; i < lineCount; i++) {
+            temp = reader.readLine().split(",");
+            if (!initialized) {
+                matrix = new int[lineCount][temp.length];
+                initialized = true;
+            }
+            for (int j = 0; j < temp.length; j++) {
+                matrix[i][j] = Integer.parseInt(temp[j]);
+            }
+        }
+        return matrix;
+    }
+
+    public static int[][] matrixTranspose(int[][] matrix) {
+        int[][] newMatrix = new int[matrix[0].length][matrix.length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                newMatrix[j][i] = matrix[i][j];
+            }
+        }
+        return newMatrix;
+    }
+
+    public static int getArrayMin(int[] x) {
+
+        Integer[] integerArr = new Integer[x.length];
+        for (int i = 0; i < x.length; i++) {
+            integerArr[i] = Integer.valueOf(x[i]);
+        }
+        return Collections.min(Arrays.asList(integerArr));
+    }
+
+    public static int getArrayMax(int[] x) {
+
+        Integer[] integerArr = new Integer[x.length];
+        for (int i = 0; i < x.length; i++) {
+            integerArr[i] = Integer.valueOf(x[i]);
+        }
+        return Collections.max(Arrays.asList(integerArr));
     }
 
 }
