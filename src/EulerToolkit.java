@@ -1,5 +1,7 @@
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.stream.IntStream;
 
 public class EulerToolkit {
 
@@ -26,17 +28,37 @@ public class EulerToolkit {
         return primes;
     }
 
-    public static Integer[] getDivisors(int x) {
+    //Naive approach
+    public static int[] getDivisors(int x) {
         ArrayList<Integer> divisors = new ArrayList<>();
-        for (int i = 1; i < Math.floor(Math.sqrt(x)); i++) {
+        for (int i = 1; i <= Math.floor(Math.sqrt(x)); i++) {
             if (x % i == 0) {
                 divisors.add(i);
-                divisors.add(x/i);
+                if(i!=x/i) divisors.add(x / i);
             }
         }
-        Integer[] divisorsArr = divisors.toArray(new Integer[divisors.size()]);
+        int[] divisorsArr = new int[divisors.size()];
+        for(int i = 0; i < divisors.size(); i++){
+            divisorsArr[i] = divisors.get(i);
+        }
         Arrays.sort(divisorsArr);
         return divisorsArr;
+    }
+
+    public static int[] getDivisorsProper(int x){
+        int[] divisors = getDivisors(x);
+        return Arrays.copyOfRange(divisors,0,divisors.length-1);
+    }
+
+    //from problem 23
+    public static boolean isPerfect(int x){
+        return IntStream.of(getDivisorsProper(x)).sum()==x;
+    }
+    public static boolean isAbundant(int x){
+        return IntStream.of(getDivisorsProper(x)).sum() > x;
+    }
+    public static boolean isDeficient(int x){
+        return IntStream.of(getDivisorsProper(x)).sum() < x;
     }
 
     public static int[] getDivisorsFast(int x) {
@@ -49,17 +71,17 @@ public class EulerToolkit {
 
     public static LinkedHashMap primeFactorise(int x) {
         LinkedHashMap<Integer, Integer> primes = new LinkedHashMap<>();
-        for(Integer i : getPrimes(x)){
-            primes.put(i,0);
+        for (Integer i : getPrimes(x)) {
+            primes.put(i, 0);
             int temp = x;
-            while(temp % i == 0){
-                primes.put(i,primes.get(i)+1);
-                temp/=i;
+            while (temp % i == 0) {
+                primes.put(i, primes.get(i) + 1);
+                temp /= i;
             }
         }
         Integer[] keys = primes.keySet().toArray(new Integer[primes.size()]);
-        for(int i : keys){
-            if(primes.get(i)==0){
+        for (int i : keys) {
+            if (primes.get(i) == 0) {
                 primes.remove(i);
             }
         }
