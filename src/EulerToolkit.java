@@ -75,9 +75,30 @@ public class EulerToolkit {
         return divisors;
     }
 
+    //returns HashMap of primes and their multiplicity
     public static LinkedHashMap primeFactorise(int x) {
         LinkedHashMap<Integer, Integer> primes = new LinkedHashMap<>();
         for (Integer i : getPrimes(x)) {
+            primes.put(i, 0);
+            int temp = x;
+            while (temp % i == 0) {
+                primes.put(i, primes.get(i) + 1);
+                temp /= i;
+            }
+        }
+        Integer[] keys = primes.keySet().toArray(new Integer[primes.size()]);
+        for (int i : keys) {
+            if (primes.get(i) == 0) {
+                primes.remove(i);
+            }
+        }
+        return primes;
+    }
+
+    //returns HashMap of primes and their multiplicity
+    public static LinkedHashMap primeFactorise(int x, int[] primeInput) {
+        LinkedHashMap<Integer, Integer> primes = new LinkedHashMap<>();
+        for (Integer i : primeInput) {
             primes.put(i, 0);
             int temp = x;
             while (temp % i == 0) {
