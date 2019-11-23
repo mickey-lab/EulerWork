@@ -183,14 +183,18 @@ public class EulerToolkit {
         return Collections.max(Arrays.asList(integerArr));
     }
 
-    public static boolean panDigitals(String s) {
-        char[] singles = new char[]{'1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        if (s.length() != 9) {
+    //pandigital number using digits 1 through n (1 to 9 e.g. 123456789)
+    public static boolean panDigitals(String s, int n) {
+        char[] singles = new char[n];
+        for (int i = 1; i <= n; i++) {
+            singles[i-1] = String.valueOf(i).charAt(0);
+        }
+        if (s.length() != n) {
             return false;
         }
         char[] sArr = s.toCharArray();
         Arrays.sort(sArr);
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < n; i++) {
             if (sArr[i] != singles[i]) {
                 return false;
             }
