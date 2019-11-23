@@ -15,7 +15,7 @@ public class Euler38 {
             for (int j = 1; j < 9 / (Math.log10(i) + 1) + 1; j++) {
                 concat += i * j;
             }
-            if (EulerToolkit.panDigitals(concat)) {
+            if (EulerToolkit.panDigitals(concat,9)) {
                 if (Integer.parseInt(concat) > max) {
                     max = Integer.parseInt(concat);
                 }

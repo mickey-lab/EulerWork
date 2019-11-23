@@ -17,7 +17,7 @@ public class Euler32 {
         for (int i = 1; i < Math.pow(10, 4); i++) {
             for (int j = (int) Math.pow(10, Math.log10(i)); j < Math.pow(10, 5 - Math.log10(i)); j++) {
                 product = i * j;
-                if (EulerToolkit.panDigitals(i + String.valueOf(j) + product) && !panDigits.contains(product)) {
+                if (EulerToolkit.panDigitals(i + String.valueOf(j) + product,9) && !panDigits.contains(product)) {
                     panDigits.add(product);
                 }
             }
