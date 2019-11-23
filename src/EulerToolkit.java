@@ -128,6 +128,7 @@ public class EulerToolkit {
         return primes;
     }
 
+    //for problems 81-83
     public static int[][] matrixInput(String fileName) throws IOException {
         //get matrix file path
         String path = System.getProperty("user.dir");
@@ -180,6 +181,21 @@ public class EulerToolkit {
             integerArr[i] = Integer.valueOf(x[i]);
         }
         return Collections.max(Arrays.asList(integerArr));
+    }
+
+    public static boolean panDigitals(String s) {
+        char[] singles = new char[]{'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        if (s.length() != 9) {
+            return false;
+        }
+        char[] sArr = s.toCharArray();
+        Arrays.sort(sArr);
+        for (int i = 0; i < 9; i++) {
+            if (sArr[i] != singles[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
